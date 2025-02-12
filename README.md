@@ -137,4 +137,50 @@ services:
 
 # Ahora vamos a ejecutar:
 
-    
+    docker compose run web django-admin startproject django_docker .
+
+# Ahora en el project de django en settings.py:
+  
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'my_database',
+        'USER': 'admin',
+        'PASSWORD': 'admin',
+        'HOST': 'db',
+        'PORT': 5432
+    }
+}
+
+# Luego ejecutar el comando para actualizar los cambios agregados:
+  docker compose up
+
+  Con ello se ejecutará y tendremos acceso a nuestro servidor de django por el puerto 8000
+  http://127.0.0.1:8000/
+
+  Agregar que cualquier cambio a los archivos que tengas, se cerrará y se ejecutará automaticamente por si solo
+
+# AHORA COMO HACEMOS CON LAS MIGRACIONES PARA NUESTRO PROYECTO DJANGO?
+    Abro otra terminal y ejecuto:
+        docker compose run web python manage.py migrate
+  
+# AHORA PARA CREAR EL SUPERUSUARIO:
+      
+      docker exec -it django python manage.py createsuperuser
+
+  it: para que sea una pantalla iterativa
+
+# Ahora si quiero crear una app
+  docker exec django python manage.py startapp core
+
+# Queremos saber que contenedores se están ejecutando:
+  docker ps
+
+# AHORA SI QUEREMOS VER LO DE POSTGRESQL
+  Abrimos en el puerto en el que se encuentra 
+  Luego en server le damos en crear, colocamo un nombre
+  Y en conexión lo vinculamos a nuestro contenedor de postgresql
+  Así que sería:
+  db
+  usuario: admin
+  contraseña: admin
